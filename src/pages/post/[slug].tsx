@@ -127,6 +127,8 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                     {content.text}
                   </blockquote>
                 );
+              case "divider":
+                return <hr></hr>;
             }
           })}
         </div>

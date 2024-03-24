@@ -10,6 +10,7 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
+// APIのレスポンスをPost型に整形
 export type Content =
   | {
       type: "paragraph" | "quote" | "heading_2" | "heading_3";
@@ -19,6 +20,9 @@ export type Content =
       type: "code";
       text: string | null;
       language: string | null;
+    }
+  | {
+      type: "divider";
     };
 
 export type Post = {
@@ -70,6 +74,11 @@ export const getPosts = async (slug?: string) => {
         },
       ],
     });
+    const blocks = await notion.blocks.children.list({
+      block_id: database.results[0]?.id,
+    });
+
+    console.dir(blocks, { depth: null });
   }
   if (!database) return [];
   const posts: Post[] = [];
@@ -111,6 +120,7 @@ export const getPostContents = async (post: Post) => {
   });
   const contents: Content[] = [];
   blockResponse.results.forEach((block) => {
+    //typeごとに分岐してContent型のcontentsに追加
     if (!("type" in block)) {
       return;
     }
@@ -144,6 +154,10 @@ export const getPostContents = async (post: Post) => {
           type: "code",
           text: block.code.rich_text[0]?.plain_text ?? null,
           language: block.code.language,
+        });
+      case "divider":
+        contents.push({
+          type: "divider",
         });
     }
   });
