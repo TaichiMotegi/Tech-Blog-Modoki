@@ -13,8 +13,13 @@ const notion = new Client({
 // APIのレスポンスをPost型に整形
 export type Content =
   | {
-      type: "paragraph" | "quote" | "heading_2" | "heading_3";
+      type: "quote" | "heading_2" | "heading_3";
       text: string | null;
+    }
+  | {
+      type: "paragraph";
+      text: string | null;
+      annotations: boolean | null;
     }
   | {
       type: "code";
@@ -23,6 +28,10 @@ export type Content =
     }
   | {
       type: "divider";
+    }
+  | {
+      type: "image";
+      url: string;
     };
 
 export type Post = {
@@ -126,10 +135,13 @@ export const getPostContents = async (post: Post) => {
     }
     switch (block.type) {
       case "paragraph":
-        contents.push({
-          type: "paragraph",
-          text: block.paragraph.rich_text[0]?.plain_text ?? null,
-        });
+        for (let i = 0; i < block.paragraph.rich_text.length; i++) {
+          contents.push({
+            type: "paragraph",
+            text: block.paragraph.rich_text[i]?.plain_text ?? null,
+            annotations: block.paragraph.rich_text[i]?.annotations.bold ?? null,
+          });
+        }
         break;
       case "heading_2":
         contents.push({
@@ -155,10 +167,18 @@ export const getPostContents = async (post: Post) => {
           text: block.code.rich_text[0]?.plain_text ?? null,
           language: block.code.language,
         });
+        break;
       case "divider":
         contents.push({
           type: "divider",
         });
+        break;
+      case "image":
+        contents.push({
+          type: "image",
+          url: block.image.file.url ?? null,
+        });
+        break;
     }
   });
   return contents;

@@ -104,11 +104,20 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                   </h3>
                 );
               case "paragraph":
-                return (
-                  <p key={key} className={styles.paragraph}>
-                    {content.text}
-                  </p>
-                );
+                if (content.annotations === true) {
+                  return (
+                    <p key={key} className={styles.paragraphBold}>
+                      {content.text}
+                    </p>
+                  );
+                } else {
+                  return (
+                    <p key={key} className={styles.paragraph}>
+                      {content.text}
+                    </p>
+                  );
+                }
+
               case "code":
                 return (
                   <pre
@@ -129,6 +138,8 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                 );
               case "divider":
                 return <hr></hr>;
+              case "image":
+                return <img src={content.url} alt="img" />;
             }
           })}
         </div>

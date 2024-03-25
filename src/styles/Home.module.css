@@ -42,6 +42,11 @@
   line-height: 24px;
 }
 
+.paragraphBold {
+  line-height: 24px;
+  font-weight: bold;
+}
+
 .code {
   line-height: 24px;
   margin: 16px 0 !import;
