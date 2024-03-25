@@ -50,7 +50,7 @@ type StaticProps = {
 };
 
 export const getPosts = async (slug?: string) => {
-  let database: QueryDatabaseResponse | undefined = undefined;
+  let database: QueryDatabaseResponse | any | undefined = undefined;
   if (slug) {
     database = await notion.databases.query({
       database_id: process.env.NOTION_DATABASE_ID || "",
@@ -138,7 +138,7 @@ export const getPostContents = async (post: Post) => {
     block_id: post.id,
   });
   const contents: Content[] = [];
-  blockResponse.results.forEach((block) => {
+  blockResponse.results.forEach((block: any) => {
     //typeごとに分岐してContent型のcontentsに追加
     if (!("type" in block)) {
       return;
