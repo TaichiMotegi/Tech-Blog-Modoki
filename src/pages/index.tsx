@@ -88,7 +88,7 @@ export const getPosts = async (slug?: string) => {
       block_id: database.results[0]?.id,
     });
 
-    console.dir(blocks, { depth: null });
+    // console.dir(blocks, { depth: null });
   }
   if (!database) return [];
   const posts: Post[] = [];
@@ -112,6 +112,9 @@ export const getPosts = async (slug?: string) => {
     }
     let thumbnail: string =
       "https://res.cloudinary.com/dtrrnrtdr/image/upload/v1711335083/noImage_h6fp92.png";
+    if (page.properties["Thumbnail"].files[0]?.file.url) {
+      thumbnail = page.properties["Thumbnail"].files[0]?.file.url;
+    }
     let slug: string | null = null;
     if (page.properties["Slug"].type === "rich_text") {
       slug = page.properties["Slug"].rich_text[0]?.plain_text ?? null;

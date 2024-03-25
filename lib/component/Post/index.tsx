@@ -8,20 +8,20 @@ export const PostComponent: FunctionComponent<{
   post: Post;
 }> = ({ post }) => {
   return (
-    <div key={post.id}>
-      <h1 className={styles.title}>
-        <Link href={`/post/${encodeURIComponent(post.slug ?? "")}`}>
-          {post.title}
-        </Link>
-      </h1>
-      <img src={post.thumbnail} alt="Thumbnail" />
+    <div className={styles.itemWrapper} key={post.id}>
+      <Link href={`/post/${encodeURIComponent(post.slug ?? "")}`}>
+        <div className={styles.imageWrapper}>
+          <img className={styles.image} src={post.thumbnail} alt="Thumbnail" />
+        </div>
+      </Link>
+      <h1 className={styles.title}>{post.title}</h1>
       <div className={styles.timestampWrapper}>
         <div>
           <div className={styles.timestamp}>
-            作成日時: {dayjs(post.createdTs).format("YYYY-MM-DD HH:mm:ss")}
+            Created: {dayjs(post.createdTs).format("YYYY/MM/DD")}
           </div>
           <div className={styles.timestamp}>
-            更新日時: {dayjs(post.lastEditedTs).format("YYYY-MM-DD HH:mm:ss")}
+            Updated: {dayjs(post.lastEditedTs).format("YYYY/MM/DD")}
           </div>
         </div>
       </div>
