@@ -5,6 +5,7 @@ import prism from "prismjs";
 import { useEffect } from "react";
 import styles from "../../lib/component/Post/index.module.css";
 import { PostComponent } from "../../lib/component/Post";
+import { Layout } from "../../lib/component/Layout";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -216,11 +217,13 @@ const Home: NextPage<StaticProps> = ({ posts }) => {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
-      {posts.map((post) => (
-        <PostComponent post={post} key={post.id} />
-      ))}
-    </div>
+    <Layout>
+      <div className={styles.wrapper}>
+        {posts.map((post) => (
+          <PostComponent post={post} key={post.id} />
+        ))}
+      </div>
+    </Layout>
   );
 };
 
