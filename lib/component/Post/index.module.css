@@ -1,3 +1,13 @@
+.wrapper {
+  max-width: 800px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  grid-template-rows: 400px 400px;
+}
+
 .post {
   padding: 8px;
   margin-bottom: 16px;
@@ -7,11 +17,12 @@
   font-size: 24px;
   font-weight: 700;
   margin: 16px 0;
+  text-align: center;
 }
 
 .timestampWrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: 8px;
 }
 

@@ -8,12 +8,13 @@ export const PostComponent: FunctionComponent<{
   post: Post;
 }> = ({ post }) => {
   return (
-    <div className={styles.post} key={post.id}>
+    <div key={post.id}>
       <h1 className={styles.title}>
         <Link href={`/post/${encodeURIComponent(post.slug ?? "")}`}>
           {post.title}
         </Link>
       </h1>
+      <img src={post.thumbnail} alt="Thumbnail" />
       <div className={styles.timestampWrapper}>
         <div>
           <div className={styles.timestamp}>

@@ -3,7 +3,7 @@ import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
 import { GetStaticProps, NextPage } from "next";
 import prism from "prismjs";
 import { useEffect } from "react";
-import { Layout } from "../../lib/component/Layout";
+import styles from "../../lib/component/Post/index.module.css";
 import { PostComponent } from "../../lib/component/Post";
 
 const notion = new Client({
@@ -37,6 +37,7 @@ export type Content =
 export type Post = {
   id: string;
   title: string | null;
+  thumbnail: string;
   slug: string | null;
   createdTs: string | null;
   lastEditedTs: string | null;
@@ -96,6 +97,8 @@ export const getPosts = async (slug?: string) => {
       posts.push({
         id: page.id,
         title: null,
+        thumbnail:
+          "https://res.cloudinary.com/dtrrnrtdr/image/upload/v1711335083/noImage_h6fp92.png",
         slug: null,
         createdTs: null,
         lastEditedTs: null,
@@ -107,6 +110,8 @@ export const getPosts = async (slug?: string) => {
     if (page.properties["Title"].type === "title") {
       title = page.properties["Title"].title[0]?.plain_text ?? null;
     }
+    let thumbnail: string =
+      "https://res.cloudinary.com/dtrrnrtdr/image/upload/v1711335083/noImage_h6fp92.png";
     let slug: string | null = null;
     if (page.properties["Slug"].type === "rich_text") {
       slug = page.properties["Slug"].rich_text[0]?.plain_text ?? null;
@@ -114,6 +119,7 @@ export const getPosts = async (slug?: string) => {
     posts.push({
       id: page.id,
       title,
+      thumbnail,
       slug,
       createdTs: page.created_time,
       lastEditedTs: page.last_edited_time,
@@ -207,11 +213,11 @@ const Home: NextPage<StaticProps> = ({ posts }) => {
   }, []);
 
   return (
-    <Layout>
+    <div className={styles.wrapper}>
       {posts.map((post) => (
         <PostComponent post={post} key={post.id} />
       ))}
-    </Layout>
+    </div>
   );
 };
 
