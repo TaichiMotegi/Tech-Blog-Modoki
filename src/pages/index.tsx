@@ -107,19 +107,24 @@ export const getPosts = async (slug?: string) => {
       });
       return;
     }
+
     let title: string | null = null;
     if (page.properties["Title"].type === "title") {
       title = page.properties["Title"].title[0]?.plain_text ?? null;
     }
     let thumbnail: string =
       "https://res.cloudinary.com/dtrrnrtdr/image/upload/v1711335083/noImage_h6fp92.png";
-    if (page.properties["Thumbnail"].files[0]?.file.url) {
-      thumbnail = page.properties["Thumbnail"].files[0]?.file.url;
+    if (page.properties["Thumbnail"].type === "files") {
+      const thumbnailFile = page.properties["Thumbnail"].files[0];
+      if (thumbnailFile?.type === "file" && thumbnailFile.file) {
+        thumbnail = thumbnailFile.file.url;
+      }
     }
     let slug: string | null = null;
     if (page.properties["Slug"].type === "rich_text") {
       slug = page.properties["Slug"].rich_text[0]?.plain_text ?? null;
     }
+
     posts.push({
       id: page.id,
       title,
@@ -184,10 +189,12 @@ export const getPostContents = async (post: Post) => {
         });
         break;
       case "image":
-        contents.push({
-          type: "image",
-          url: block.image.file.url ?? null,
-        });
+        if (block.image.type === "file") {
+          contents.push({
+            type: "image",
+            url: block.image.file.url ?? null,
+          });
+        }
         break;
     }
   });
