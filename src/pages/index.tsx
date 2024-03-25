@@ -50,7 +50,7 @@ type StaticProps = {
 };
 
 export const getPosts = async (slug?: string) => {
-  let database: QueryDatabaseResponse | any | undefined = undefined;
+  let database: QueryDatabaseResponse | undefined = undefined;
   if (slug) {
     database = await notion.databases.query({
       database_id: process.env.NOTION_DATABASE_ID || "",
