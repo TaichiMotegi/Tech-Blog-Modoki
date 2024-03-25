@@ -5,7 +5,6 @@ import { Post, getPostContents, getPosts } from "..";
 import { Layout } from "../../../lib/component/Layout";
 import styles from "../../styles/Home.module.css";
 import dayjs from "dayjs";
-import Link from "next/link";
 
 type StaticPathsParams = {
   slug: string;
@@ -72,18 +71,14 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
   return (
     <Layout>
       <div className={styles.post} key={post.id}>
-        <h1 className={styles.title}>
-          <Link href={`/post/${encodeURIComponent(post.slug ?? "")}`}>
-            {post.title}
-          </Link>
-        </h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.timestampWrapper}>
           <div>
             <div className={styles.timestamp}>
-              作成日時: {dayjs(post.createdTs).format("YYYY-MM-DD HH:mm:ss")}
+              Created: {dayjs(post.createdTs).format("YYYY/MM/DD")}
             </div>
             <div className={styles.timestamp}>
-              更新日時: {dayjs(post.lastEditedTs).format("YYYY-MM-DD HH:mm:ss")}
+              Updated: {dayjs(post.lastEditedTs).format("YYYY/MM/DD")}
             </div>
           </div>
         </div>
