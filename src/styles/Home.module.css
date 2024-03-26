@@ -61,3 +61,18 @@
   padding: 0 16px;
   border-left: 2px solid #d1d5db;
 }
+
+@media screen and (max-width: 600px) {
+  .title {
+    margin-top: 0;
+  }
+
+  .heading2 {
+    font-size: large;
+  }
+
+  .timestampWrapper {
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+}

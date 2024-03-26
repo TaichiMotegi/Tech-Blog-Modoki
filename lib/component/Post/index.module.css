@@ -87,3 +87,10 @@
 .image:hover {
   transform: scale(1.25);
 }
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    display: flex;
+    flex-flow: column;
+  }
+}
