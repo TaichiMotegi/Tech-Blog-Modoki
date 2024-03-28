@@ -135,6 +135,12 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                 return <hr></hr>;
               case "image":
                 return <img src={content.url} alt="img" />;
+              case "list":
+                return (
+                  <ul className={styles.list}>
+                    <li>{content.text}</li>
+                  </ul>
+                );
             }
           })}
         </div>

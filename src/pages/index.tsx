@@ -33,6 +33,10 @@ export type Content =
   | {
       type: "image";
       url: string;
+    }
+  | {
+      type: "list";
+      text: string | null;
     };
 
 export type Post = {
@@ -85,11 +89,6 @@ export const getPosts = async (slug?: string) => {
         },
       ],
     });
-    const blocks = await notion.blocks.children.list({
-      block_id: database.results[0]?.id,
-    });
-
-    // console.dir(blocks, { depth: null });
   }
   if (!database) return [];
   const posts: Post[] = [];
@@ -142,6 +141,7 @@ export const getPostContents = async (post: Post) => {
   const blockResponse = await notion.blocks.children.list({
     block_id: post.id,
   });
+  // console.dir(blockResponse.results, { depth: null });
   const contents: Content[] = [];
   blockResponse.results.forEach((block: any) => {
     //typeごとに分岐してContent型のcontentsに追加
@@ -196,6 +196,11 @@ export const getPostContents = async (post: Post) => {
           });
         }
         break;
+      case "bulleted_list_item":
+        contents.push({
+          type: "list",
+          text: block.bulleted_list_item.rich_text[0]?.plain_text ?? null,
+        });
     }
   });
   return contents;
