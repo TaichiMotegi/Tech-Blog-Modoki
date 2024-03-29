@@ -71,6 +71,7 @@
 
 .link {
   color: #00a9ff;
+  font-weight: normal;
 }
 
 @media screen and (max-width: 600px) {

@@ -143,7 +143,7 @@ export const getPostContents = async (post: Post) => {
   const blockResponse = await notion.blocks.children.list({
     block_id: post.id,
   });
-  console.dir(blockResponse.results, { depth: null });
+  // console.dir(blockResponse.results, { depth: null });
   const contents: Content[] = [];
   blockResponse.results.forEach((block: any) => {
     //typeごとに分岐してContent型のcontentsに追加
