@@ -37,6 +37,7 @@ export type Content =
   | {
       type: "list";
       text: string | null;
+      url: string | null;
     };
 
 export type Post = {
@@ -200,7 +201,9 @@ export const getPostContents = async (post: Post) => {
         contents.push({
           type: "list",
           text: block.bulleted_list_item.rich_text[0]?.plain_text ?? null,
+          url: block.bulleted_list_item.rich_text[0]?.href ?? null,
         });
+        break;
     }
   });
   return contents;

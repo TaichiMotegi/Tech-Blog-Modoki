@@ -92,12 +92,14 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                     {content.text}
                   </h2>
                 );
+
               case "heading_3":
                 return (
                   <h3 key={key} className={styles.heading3}>
                     {content.text}
                   </h3>
                 );
+
               case "paragraph":
                 if (content.annotations === true) {
                   return (
@@ -125,22 +127,36 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                     <code>{content.text}</code>
                   </pre>
                 );
+
               case "quote":
                 return (
                   <blockquote key={key} className={styles.quote}>
                     {content.text}
                   </blockquote>
                 );
+
               case "divider":
-                return <hr></hr>;
+                return <hr key={key}></hr>;
+
               case "image":
-                return <img src={content.url} alt="img" />;
+                return <img key={key} src={content.url} alt="img" />;
+
               case "list":
-                return (
-                  <ul className={styles.list}>
-                    <li>{content.text}</li>
-                  </ul>
-                );
+                if (content.url) {
+                  return (
+                    <li key={key} className={styles.list}>
+                      <a href={content.url} className={styles.link}>
+                        {content.text}
+                      </a>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li key={key} className={styles.list}>
+                      {content.text}
+                    </li>
+                  );
+                }
             }
           })}
         </div>

@@ -69,6 +69,10 @@
   font-size: large;
 }
 
+.link {
+  color: #82aaaa;
+}
+
 @media screen and (max-width: 600px) {
   .title {
     margin-top: 0;
