@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
-import Link from "next/link";
 import { FunctionComponent } from "react";
 import { Post } from "@/pages";
+import Link from "next/link";
+import Image from "next/image";
+import dayjs from "dayjs";
 import styles from "./index.module.css";
 
 export const PostComponent: FunctionComponent<{
@@ -11,7 +12,13 @@ export const PostComponent: FunctionComponent<{
     <div className={styles.itemWrapper} key={post.id}>
       <Link href={`/post/${encodeURIComponent(post.slug ?? "")}`}>
         <div className={styles.imageWrapper}>
-          <img className={styles.image} src={post.thumbnail} alt="Thumbnail" />
+          <Image
+            width={500}
+            height={500}
+            className={styles.image}
+            src={post.thumbnail}
+            alt="Thumbnail"
+          />
         </div>
       </Link>
       <h1 className={styles.title}>{post.title}</h1>

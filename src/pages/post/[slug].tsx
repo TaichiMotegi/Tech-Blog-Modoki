@@ -1,10 +1,11 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import prism from "prismjs";
+import Image from "next/image";
 import { useEffect } from "react";
 import { Post, getPostContents, getPosts } from "..";
 import { Layout } from "../../../lib/component/Layout";
-import styles from "../../styles/Home.module.css";
+import prism from "prismjs";
 import dayjs from "dayjs";
+import styles from "../../styles/Home.module.css";
 
 type StaticPathsParams = {
   slug: string;
@@ -153,7 +154,15 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                 return <hr key={key}></hr>;
 
               case "image":
-                return <img key={key} src={content.url} alt="img" />;
+                return (
+                  <Image
+                    key={key}
+                    src={content.url}
+                    alt="image"
+                    width={500}
+                    height={500}
+                  />
+                );
 
               case "list":
                 if (content.url) {
