@@ -101,18 +101,32 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                 );
 
               case "paragraph":
-                if (content.annotations === true) {
+                if (content.url) {
                   return (
-                    <p key={key} className={styles.paragraphBold}>
+                    <a
+                      key={key}
+                      href={content.url}
+                      className={styles.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {content.text}
-                    </p>
+                    </a>
                   );
                 } else {
-                  return (
-                    <p key={key} className={styles.paragraph}>
-                      {content.text}
-                    </p>
-                  );
+                  if (content.annotations === true) {
+                    return (
+                      <p key={key} className={styles.paragraphBold}>
+                        {content.text}
+                      </p>
+                    );
+                  } else {
+                    return (
+                      <p key={key} className={styles.paragraph}>
+                        {content.text}
+                      </p>
+                    );
+                  }
                 }
 
               case "code":
@@ -145,7 +159,12 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
                 if (content.url) {
                   return (
                     <li key={key} className={styles.list}>
-                      <a href={content.url} className={styles.link}>
+                      <a
+                        href={content.url}
+                        className={styles.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {content.text}
                       </a>
                     </li>

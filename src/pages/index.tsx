@@ -20,6 +20,7 @@ export type Content =
   | {
       type: "paragraph";
       text: string | null;
+      url: string | null;
       annotations: boolean | null;
     }
   | {
@@ -142,7 +143,7 @@ export const getPostContents = async (post: Post) => {
   const blockResponse = await notion.blocks.children.list({
     block_id: post.id,
   });
-  // console.dir(blockResponse.results, { depth: null });
+  console.dir(blockResponse.results, { depth: null });
   const contents: Content[] = [];
   blockResponse.results.forEach((block: any) => {
     //typeごとに分岐してContent型のcontentsに追加
@@ -155,6 +156,7 @@ export const getPostContents = async (post: Post) => {
           contents.push({
             type: "paragraph",
             text: block.paragraph.rich_text[i]?.plain_text ?? null,
+            url: block.paragraph.rich_text[i]?.href ?? null,
             annotations: block.paragraph.rich_text[i]?.annotations.bold ?? null,
           });
         }
