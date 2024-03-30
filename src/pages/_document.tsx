@@ -12,6 +12,7 @@ const Index = () => {
             "&display=swap"
           }
         />
+        <link rel="apple-touch-icon" href="../../public/favicon.ico" />
       </Head>
       <body>
         <Main />
