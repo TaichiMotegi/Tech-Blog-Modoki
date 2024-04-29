@@ -27,7 +27,7 @@ export const PostComponent: FunctionComponent<{
           <div className={styles.timestamp}>
             Created：{dayjs(post.createdTs).format("YYYY/MM/DD")}
           </div>
-          <div className={styles.timestamp}>
+          <div className={styles.timestamp}suppressHydrationWarning={true}>
             Updated：{dayjs(post.lastEditedTs).format("YYYY/MM/DD")}
           </div>
         </div>
