@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import { useEffect } from "react";
 import { Post, getPostContents, getPosts } from "..";
@@ -15,25 +15,7 @@ type StaticProps = {
   post?: Post;
 };
 
-export const getStaticPaths: GetStaticPaths<StaticPathsParams> = async () => {
-  const posts = await getPosts();
-  const paths: {
-    params: { slug: string };
-  }[] = [];
-  posts.forEach((post) => {
-    const slug = post.slug;
-    if (slug) {
-      paths.push({
-        params: {
-          slug,
-        },
-      });
-    }
-  });
-  return { paths, fallback: "blocking" };
-};
-
-export const getStaticProps: GetStaticProps<
+export const getServerSideProps: GetServerSideProps<
   StaticProps,
   StaticPathsParams
 > = async ({ params, preview }) => {
@@ -58,7 +40,6 @@ export const getStaticProps: GetStaticProps<
     props: {
       post,
     },
-    revalidate: 60,
   };
 };
 

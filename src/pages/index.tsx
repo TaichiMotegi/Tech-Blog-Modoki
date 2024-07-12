@@ -1,6 +1,6 @@
 import { Client } from "@notionhq/client";
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
-import { GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import prism from "prismjs";
 import { useEffect } from "react";
 import styles from "../../lib/component/Post/index.module.css";
@@ -51,7 +51,7 @@ export type Post = {
   contents: Content[];
 };
 
-type StaticProps = {
+type Props = {
   posts: Post[];
 };
 
@@ -211,7 +211,7 @@ export const getPostContents = async (post: Post) => {
   return contents;
 };
 
-export const getStaticProps: GetStaticProps<StaticProps> = async () => {
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const posts = await getPosts();
   const contentsList = await Promise.all(
     posts.map((post) => {
@@ -224,11 +224,10 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 
   return {
     props: { posts },
-    revalidate: 60,
   };
 };
 
-const Home: NextPage<StaticProps> = ({ posts }) => {
+const Home: NextPage<Props> = ({ posts }) => {
   useEffect(() => {
     prism.highlightAll();
   }, []);
